@@ -70,8 +70,39 @@
 	<!-- ===================================================================== -->
 	<target name="post.compile.name">
 	</target>
+	
+	<property
+	    name="sources.dir"
+	    value="${base.dir}/sources"
+	     />
+	<property
+		name="build.dir"
+		value="${base.dir}/build"
+		 />
+	<property
+		name="scala.home"
+		value="../ecobertura.pde" />
+	
+	<target name="init">
+		<property
+		  name="scala-library.jar"
+		  value="${scala.home}/lib/jars/scala-library.jar"
+		   />
+		<path id="build.classpath">
+		  <pathelement location="${scala-library.jar}"   />
+		  <!--<pathelement location="${your.path}"   />-->
+		  <pathelement location="${build.dir}"   />
+		</path>
+		<taskdef resource="scala/tools/ant/antlib.xml">
+		  <classpath>
+		    <pathelement location="${scala.home}/lib/jars/scala-compiler.jar"   />
+		  	<pathelement location="${scala.home}/lib/jars/scala-reflect.jar"   />
+		    <pathelement location="${scala-library.jar}"   />
+		  </classpath>
+		</taskdef>
+	</target>
 
-	<target name="post.compile.@dot">
+	<target name="post.compile.@dot" depends="init">
 		<property name="currentClasspath" refid="@dot.classpath"/>
 		<echo message="Classpath: ${currentClasspath}" />
 

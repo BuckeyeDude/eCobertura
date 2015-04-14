@@ -19,6 +19,7 @@ import java.util.logging.Logger
 import net.sourceforge.cobertura.coveragedata.CoverageDataFileHandler
 import net.sourceforge.cobertura.coveragedata.ProjectData
 import net.sourceforge.cobertura.instrument.Main
+import net.sourceforge.cobertura.instrument.CoberturaInstrumenter
 
 import org.eclipse.core.runtime._
 
@@ -38,14 +39,13 @@ object CoberturaWrapper {
   val logger = Logger.getLogger("ecobertura.core.cobertura")
   	
   val DEFAULT_COBERTURA_FILENAME = "cobertura.ser" //$NON-NLS-1$
-  val COBERTURA_JAR_NAME = "cobertura.jar" //$NON-NLS-1$
+  val COBERTURA_JAR_NAME = "cobertura-2.0.3.jar" //$NON-NLS-1$
   
   private lazy val instance = new CoberturaWrapper
   def get = instance
 	
   class CoberturaWrapper extends ICoberturaWrapper {
-    private val COBERTURA_ADD_INSTRUMENTATION_TO_SINGLE_CLASS = "addInstrumentationToSingleClass"; //$NON-NLS-1$
-    private val coberturaMain = new Main
+    private val coberturaInstrumenter = new CoberturaInstrumenter
     private var coberturaProjectData : ProjectData = new ProjectData
     
     initializeCoberturaProjectData
@@ -53,20 +53,8 @@ object CoberturaWrapper {
     private def initializeCoberturaProjectData = {
       logger.fine("initializing Cobertura project data...")
       coberturaProjectData = new ProjectData
-      try {
-        setPrivateProjectData
-      } catch {
-        case e: NoSuchFieldException => 
-            wrapByCoberturaException("field %s not found in Cobertura Main", e) //$NON-NLS-1$
-        case e: IllegalAccessException =>
-            wrapByCoberturaException("unable to access field %s in Cobertura Main", e) //$NON-NLS-1$
-      }
-
-      def setPrivateProjectData = {
-        val projectDataField = coberturaMain.getClass.getDeclaredField("projectData")
-        projectDataField.setAccessible(true)
-        projectDataField.set(coberturaMain, coberturaProjectData)
-      }
+      
+      coberturaInstrumenter.setProjectData(coberturaProjectData)
     }
 
     override def projectDataFromFile(filename: String) : ProjectData = {
@@ -90,30 +78,7 @@ object CoberturaWrapper {
           CoberturaWrapper.DEFAULT_COBERTURA_FILENAME)
     
     override def instrumentClassFile(classFileToInstrument: File) = {
-      try {
-        invokePrivateAddInstrumentationMethodOnMain(classFileToInstrument, coberturaMain)
-      } catch {
-        case e: NoSuchMethodException => 
-            wrapByCoberturaException("method %s() not found in Cobertura Main", e); //$NON-NLS-1$
-        case e: IllegalAccessException =>
-            wrapByCoberturaException("unable to access method %s() in Cobertura Main", e); //$NON-NLS-1$
-        case e: InvocationTargetException =>
-            wrapByCoberturaException("exception occurred within %s() in Cobertura Main", //$NON-NLS-1$
-                e.getCause())
-      }
-      
-      def invokePrivateAddInstrumentationMethodOnMain(
-          classFileToInstrument: File, coberturaMain: Main) = {
-        val addInstrumentationToSingleClass = coberturaMain.getClass.getDeclaredMethod(
-            COBERTURA_ADD_INSTRUMENTATION_TO_SINGLE_CLASS, classOf[File])
-        addInstrumentationToSingleClass.setAccessible(true)
-        addInstrumentationToSingleClass.invoke(coberturaMain, classFileToInstrument)
-      }
-    }
-
-    private def wrapByCoberturaException(messageTemplate: String, cause: Throwable) = {
-      val message = String format (messageTemplate, COBERTURA_ADD_INSTRUMENTATION_TO_SINGLE_CLASS)
-      throw new CoberturaException(message, cause)
+      coberturaInstrumenter.addInstrumentationToSingleClass(classFileToInstrument);
     }
     
     override def pathToJar : IPath = {

@@ -2,10 +2,23 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry exported="true" kind="lib" path="oro.jar"/>
-	<classpathentry exported="true" kind="lib" path="asm.jar"/>
-	<classpathentry exported="true" kind="lib" path="asm-tree.jar"/>
-	<classpathentry exported="true" kind="lib" path="cobertura.jar"/>
-	<classpathentry exported="true" kind="lib" path="log4j.jar"/>
+	<classpathentry exported="true" kind="lib" path="asm-4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="asm-analysis-4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="asm-commons-4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="asm-tree-4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="asm-util-4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="dom4j-1.6.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="icu4j-2.6.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="jaxen-1.1-beta-8.jar"/>
+	<classpathentry exported="true" kind="lib" path="jdom-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-6.1.14.jar"/>
+	<classpathentry exported="true" kind="lib" path="jetty-util-6.1.14.jar"/>
+	<classpathentry exported="true" kind="lib" path="log4j-1.2.9.jar"/>
+	<classpathentry exported="true" kind="lib" path="oro-2.0.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="servlet-api-2.5-6.1.14.jar"/>
+	<classpathentry exported="true" kind="lib" path="tagsoup-0.9.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="xmlParserAPIs-2.6.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="xom-1.0b3.jar"/>
+	<classpathentry exported="true" kind="lib" path="cobertura-2.0.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

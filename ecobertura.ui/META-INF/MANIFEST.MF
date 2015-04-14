@@ -4,14 +4,14 @@ Bundle-Name: eCobertura UI
 Bundle-SymbolicName: ecobertura.ui;singleton:=true
 Bundle-Version: 0.9.8.qualifier
 Bundle-Activator: ecobertura.ui.UIPlugin
-Require-Bundle: ecobertura.scala,
- ecobertura.cobertura,
+Require-Bundle: ecobertura.cobertura,
+ ecobertura.scala,
  ecobertura.core,
  org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.editors,
  org.eclipse.jface.text,
- org.junit4,
+ org.junit; bundle-version = "4.11.0",
  org.eclipse.debug.ui,
  org.eclipse.jdt.core,
  org.eclipse.jdt.launching,
