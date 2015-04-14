@@ -75,8 +75,13 @@ class CoverageAnnotationModel(editor: ITextEditor, document: IDocument)
 					val offset = document.getLineOffset(lineNumber)
 					val length = document.getLineLength(lineNumber)
 					val annotation = 
-						if (line.isCovered) CoverageAnnotation.coveredAtPosition(offset, length)
-						else CoverageAnnotation.notCoveredAtPosition(offset, length)
+						if (line.isFullyCovered) {
+						  CoverageAnnotation.coveredAtPosition(offset, length)
+						} else if (line.isPartiallyCovered) {
+						  CoverageAnnotation.partiallyCoveredAtPosition(offset, length)
+						} else {
+						  CoverageAnnotation.notCoveredAtPosition(offset, length)
+						}
 						
 					annotations ::= annotation
 					val event = new AnnotationModelEvent(this)
@@ -116,7 +121,7 @@ class CoverageAnnotationModel(editor: ITextEditor, document: IDocument)
 			annotations.foreach(annotation => document.removePosition(annotation.getPosition))
 	}
 	
-	override def getAnnotationIterator = JavaConversions.asIterator(annotations.iterator)
+	override def getAnnotationIterator = JavaConversions.asJavaIterator(annotations.iterator)
 	
 	override def getPosition(annotation: Annotation) = annotation match {
 		case coverageAnnotation: CoverageAnnotation => coverageAnnotation.getPosition

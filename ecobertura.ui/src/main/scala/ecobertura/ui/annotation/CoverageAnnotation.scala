@@ -17,12 +17,16 @@ import org.eclipse.jface.text.source.Annotation
 object CoverageAnnotation {
 	val ID_COVERED = "ecobertura.ui.annotation.coverageAnnotation.covered" //$NON-NLS-1$
 	val ID_NOT_COVERED = "ecobertura.ui.annotation.coverageAnnotation.notCovered" //$NON-NLS-1$
+	val ID_PARTIALLY_COVERED = "ecobertura.ui.annotation.coverageAnnotation.partiallyCovered" //$NON-NLS-1$
 		
 	def coveredAtPosition(offset: Int, length: Int): CoverageAnnotation =
 		new CoverageAnnotation(ID_COVERED, offset, length)
 	
 	def notCoveredAtPosition(offset: Int, length: Int): CoverageAnnotation =
 		new CoverageAnnotation(ID_NOT_COVERED, offset, length)
+	
+	def partiallyCoveredAtPosition(offset: Int, length: Int): CoverageAnnotation =
+		new CoverageAnnotation(ID_PARTIALLY_COVERED, offset, length)
 }
 
 class CoverageAnnotation(typeId: String, offset: Int, length: Int) 

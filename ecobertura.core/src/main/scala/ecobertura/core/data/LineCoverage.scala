@@ -25,13 +25,15 @@ object LineCoverage {
   private class LineCoverageImpl(lineData: LineData) extends LineCoverage {
     override def lineNumber = lineData.getLineNumber
     override def hits = lineData.getHits
+    override def isFullyCovered = lineData.isCovered
   }
 }
 
 trait LineCoverage {
   def lineNumber: Int
   def hits: Long
-  def isCovered = hits > 0
+  def isPartiallyCovered = hits > 0
+  def isFullyCovered : Boolean
   
   override def toString = "LineCoverage(%d, %d)".format(lineNumber, hits)
 }

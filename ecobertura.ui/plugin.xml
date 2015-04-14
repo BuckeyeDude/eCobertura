@@ -56,6 +56,31 @@
             verticalRulerPreferenceValue="false">
       </specification>
       <specification
+            annotationType="ecobertura.ui.annotation.coverageAnnotation.partiallyCovered"
+            colorPreferenceKey="line_partially_covered_color"
+            colorPreferenceValue="255,255,148"
+            contributesToHeader="false"
+            highlightPreferenceKey="line_partially_covered_highlight"
+            highlightPreferenceValue="true"
+            includeOnPreferencePage="true"
+            isGoToNextNavigationTarget="false"
+            isGoToNextNavigationTargetKey="line_partially_covered_isGoToNextNavigationTargetKey"
+            isGoToPreviousNavigationTarget="false"
+            isGoToPreviousNavigationTargetKey="line_partially_covered_isGoToPreviousNavigationTargetKey"
+            label="Line partially covered"
+            overviewRulerPreferenceKey="line_partially_covered_overview"
+            overviewRulerPreferenceValue="false"
+            presentationLayer="0"
+            showInNextPrevDropdownToolbarAction="false"
+            showInNextPrevDropdownToolbarActionKey="line_partially_covered_showInNextPrevDropdownToolbarAction"
+            textPreferenceKey="line_partially_covered_text"
+            textPreferenceValue="true"
+            textStylePreferenceKey="line_partially_covered_stylePreferences"
+            textStylePreferenceValue="BOX"
+            verticalRulerPreferenceKey="line_not_covered_verticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+      <specification
             annotationType="ecobertura.ui.annotation.coverageAnnotation.notCovered"
             colorPreferenceKey="line_not_covered_color"
             colorPreferenceValue="255,221,221"
@@ -294,6 +319,20 @@
       </command>
       <command
             categoryId="ecobertura.ui.views.session.commands.category"
+            defaultHandler="ecobertura.ui.views.session.commands.ClearCoverageSessionHandler"
+            description="Clears the currently selected coverage session from history"
+            id="ecobertura.ui.views.session.commands.clearCoverageSession"
+            name="Clear coverage session">
+      </command>
+      <command
+            categoryId="ecobertura.ui.views.session.commands.category"
+            defaultHandler="ecobertura.ui.views.session.commands.ClearAllCoverageSessionHandler"
+            description="Clears all coverage sessions from history"
+            id="ecobertura.ui.views.session.commands.clearCoverageSessions"
+            name="Clear all coverage sessions">
+      </command>
+      <command
+            categoryId="ecobertura.ui.views.session.commands.category"
             defaultHandler="ecobertura.ui.views.session.commands.SelectRecentCoverageSessionHandler"
             description="Selects one of the recently opened coverage sessions"
             id="ecobertura.ui.views.session.commands.selectRecentCoverageSession"
@@ -354,6 +393,25 @@
                style="push"
                tooltip="Opens a coverage session &quot;cobertura.ser&quot;.">
          </command>
+         
+         <command
+               commandId="ecobertura.ui.views.session.commands.clearCoverageSession"
+               icon="icons/remove.gif"
+               label="Remove"
+               mnemonic="S"
+               style="push"
+               tooltip="Removes the current coverage session">
+         </command>
+         
+          <command
+               commandId="ecobertura.ui.views.session.commands.clearCoverageSessions"
+               icon="icons/removeall.gif"
+               label="Remove all"
+               mnemonic="A"
+               style="push"
+               tooltip="Removes all coverage sessions">
+         </command>
+         
       </menuContribution>
       <menuContribution
             locationURI="menu:ecobertura.ui.views.session.CoverageSessionView?after=additions">
