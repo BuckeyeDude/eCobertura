@@ -35,6 +35,7 @@ class CoverageSessionModel extends CoverageSessionResetPublisher with ITreeConte
 	
 	def clearHistory = {
 		internalCoverageSessionHistory = List()
+		selectedCoverageSession = None
 		buildFromSession
 		fireSessionReset(None)
 	}
@@ -58,6 +59,15 @@ class CoverageSessionModel extends CoverageSessionResetPublisher with ITreeConte
 			}
 			case None => /* nothing to do */
 		}
+	}
+	
+	def clearCoverageSession(coverageSession: CoverageSession) = {
+		internalCoverageSessionHistory = internalCoverageSessionHistory.filter(_ != coverageSession)
+		selectedCoverageSession = internalCoverageSessionHistory.headOption
+		logger.fine("history: " + internalCoverageSessionHistory.mkString(", "))
+		buildFromSession
+		
+		fireSessionReset(selectedCoverageSession)
 	}
 	
 	def currentCoverageSession = selectedCoverageSession
